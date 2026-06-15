@@ -7,14 +7,14 @@ import {DecisionLog} from "../src/DecisionLog.sol";
 
 contract StrategyVaultTest is Test {
     StrategyVault vault;
-    DecisionLog log;
+    DecisionLog decisionLog;
     address owner = address(this);
     address agent = address(0xA1);
     address stranger = address(0xB2);
 
     function setUp() public {
-        log = new DecisionLog(agent);
-        vault = new StrategyVault(agent, log, 100, 2000, 1000); // 20% dd, equity 1000
+        decisionLog = new DecisionLog(agent);
+        vault = new StrategyVault(agent, decisionLog, 100, 2000, 1000); // 20% dd, equity 1000
     }
 
     function test_execute_within_limits() public {
@@ -98,6 +98,6 @@ contract StrategyVaultTest is Test {
 
     function test_revert_constructor_zeroAgent() public {
         vm.expectRevert("zero agent");
-        new StrategyVault(address(0), log, 100, 2000, 1000);
+        new StrategyVault(address(0), decisionLog, 100, 2000, 1000);
     }
 }

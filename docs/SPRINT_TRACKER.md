@@ -144,7 +144,8 @@ Single-container nginx+node, matching the Convergence pattern on atrio-demo.
 - [x] [SANDBOX] web build prerequisites: next.config.js (output standalone), web/tsconfig.json, public/ dir, agent start script
 - [x] [VERIFIED] `next build` COMPILES clean (4/4 pages, types OK); standalone symlink step fails on Windows only (EPERM) -> works in Linux/Docker
 - [x] [SANDBOX] docs/DEPLOY_RUNBOOK.md with exact ssh/clone/compose/curl commands
-- [ ] [DEPLOY] on Vultr: ssh root@45.77.52.54; clone -> /srv/turing-quant-agent; docker compose up -d --build; curl :8097/api/health  (USER-RUN, Docker not on Windows box)
+- [x] [ON BOX] FOUND+FIXED Docker build bug: COPY mobile/package.json failed because .dockerignore excluded `mobile`; removed that line (manifest needed for frozen-lockfile install)
+- [ ] [DEPLOY] re-run on Vultr: git pull; docker compose up -d --build; curl :8097/api/health  (USER-RUN, Docker not on Windows box)
 - [x] commit + push deploy artifacts
 - NOTE: MOCK-MODE demo (not Mantle-connected). Live = Sprints C1-C3.
 
@@ -160,7 +161,8 @@ Single-container nginx+node, matching the Convergence pattern on atrio-demo.
 - [x] Foundry 1.7.1 installed + verified on atrio-demo (forge/cast/anvil/chisel)
 - [x] added contracts/remappings.txt (forge-std/) + gitignored contracts/lib/
 - [ ] [ON BOX] forge install foundry-rs/forge-std --no-git
-- [ ] [ON BOX] forge build (3 contracts, solc 0.8.26)
+- [x] [ON BOX] forge install done; FOUND+FIXED build bug: test contracts had field `DecisionLog log` shadowing forge-std Test's `event log(string)` -> renamed to `decisionLog` (DecisionLog.t.sol, StrategyVault.t.sol)
+- [ ] [ON BOX] re-run forge build (3 contracts, solc 0.8.26)
 - [ ] [ON BOX] forge test -vvv (expect ~26 tests incl. revert/negative cases)
 - [ ] [ON BOX] forge coverage (100% standard)
 - NOTE: forge runs on the Vultr box (not the Windows shell); commands in DEPLOY/this tracker, output reviewed here.
