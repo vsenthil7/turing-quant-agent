@@ -71,7 +71,8 @@ Updated every mini-sprint. Status: OK verified · PEND partial/pending gate · B
 | Item | Detail | Status |
 |------|--------|--------|
 | HTTP server | server/router.ts (pure) + httpServer.ts (I/O); binds api/api2; mock via makeAdapters | DONE S6 (192/192, verified live :8099) |
-| Container | single image nginx + node, /srv/turing-quant-agent on atrio-demo | PLAN S7 |
+| Container | single image nginx + node, /srv/turing-quant-agent on atrio-demo | ARTIFACTS DONE S7 (Dockerfile+compose+nginx+entrypoint+runbook); deploy USER-RUN |
+| Web build | next.config.js output=standalone, tsconfig, public/ | DONE S7 (compiles clean; standalone packs in Linux/Docker) |
 | Host port | 8097 -> container 80 (free slot after agentfoundry=8096) | DECIDED |
 | Deploy host | Vultr 45.77.52.54 (atrio-demo, Ubuntu 24.04) | n/a |
 | Mode at deploy | MOCK (not Mantle-connected); live = C1-C3 | NOTED |

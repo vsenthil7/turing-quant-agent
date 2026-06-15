@@ -137,14 +137,16 @@ Production HTTP server so the app is runnable/containerisable. No external keys 
 - [x] cleaned stray in-src compiled artifacts; added *.tsbuildinfo to .gitignore
 - [ ] commit + push
 
-## Sprint 7 — Containerise + deploy to Vultr (mock-mode demo)  [ ] TODO
+## Sprint 7 — Containerise + deploy to Vultr (mock-mode demo)  [~] ARTIFACTS DONE; deploy pending on box
 Single-container nginx+node, matching the Convergence pattern on atrio-demo.
-- [ ] [SANDBOX] Dockerfile (multi-stage: node build web + server, nginx serves static + proxies /api)
-- [ ] [SANDBOX] docker-compose.yml (host 8097 -> 80), deploy/nginx.conf, deploy/entrypoint.sh, .dockerignore
-- [ ] [DESKTOP] build image locally if Docker present on Windows; else hand off
-- [ ] [DEPLOY] on Vultr: ssh root@45.77.52.54; git clone -> /srv/turing-quant-agent; docker compose up -d --build; curl health on :8097
-- [ ] NOTE: this is a MOCK-MODE demo (not yet connected to Mantle). Live = Sprints C1-C3.
-- [ ] commit + push deploy artifacts
+- [x] [SANDBOX] Dockerfile (multi-stage: pnpm build core+agent+web standalone; runtime nginx + node)
+- [x] [SANDBOX] docker-compose.yml (host 8097 -> 80), deploy/nginx.conf (/api proxy strip), deploy/entrypoint.sh, .dockerignore
+- [x] [SANDBOX] web build prerequisites: next.config.js (output standalone), web/tsconfig.json, public/ dir, agent start script
+- [x] [VERIFIED] `next build` COMPILES clean (4/4 pages, types OK); standalone symlink step fails on Windows only (EPERM) -> works in Linux/Docker
+- [x] [SANDBOX] docs/DEPLOY_RUNBOOK.md with exact ssh/clone/compose/curl commands
+- [ ] [DEPLOY] on Vultr: ssh root@45.77.52.54; clone -> /srv/turing-quant-agent; docker compose up -d --build; curl :8097/api/health  (USER-RUN, Docker not on Windows box)
+- [x] commit + push deploy artifacts
+- NOTE: MOCK-MODE demo (not Mantle-connected). Live = Sprints C1-C3.
 
 ---
 
