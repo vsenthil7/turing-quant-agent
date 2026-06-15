@@ -1,0 +1,7 @@
+{
+  "name": "@tqa/mobile",
+  "private": true,
+  "scripts": { "start": "expo start", "test:e2e": "detox test" },
+  "dependencies": { "expo": "~51.0.0", "react": "18.2.0", "react-native": "0.74.0" },
+  "devDependencies": { "detox": "^20.0.0", "typescript": "^5.5.0" }
+}

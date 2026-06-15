@@ -1,0 +1,19 @@
+{
+  "name": "turing-quant-agent",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "workspaces": ["packages/*", "agent", "web", "mobile"],
+  "scripts": {
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "test:core": "pnpm --filter @tqa/core test",
+    "test:agent": "pnpm --filter @tqa/agent test",
+    "lint": "pnpm -r lint",
+    "secrets": "gitleaks detect --no-banner -v"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "vitest": "^2.0.0",
+    "@vitest/coverage-v8": "^2.0.0"
+  }
+}
