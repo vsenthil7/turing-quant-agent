@@ -6,6 +6,8 @@ dist/
 out/
 cache/
 coverage/
+cov.txt
+coverage_out.txt
 broadcast/
 .next/
 *.log

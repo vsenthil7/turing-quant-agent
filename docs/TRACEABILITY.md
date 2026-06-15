@@ -50,9 +50,10 @@ Updated every mini-sprint. Status: OK verified · PEND partial/pending gate · B
 | Audit trail | agent/src/audit.ts | audit.test | OK |
 | Notification model (B10) | agent/src/notifications.ts | covered via domain/api tests | OK |
 | Buyer domains accounts/ledger/fee/leaderboard/ratelimit | agent/src/domain/* | agent/test/domain.test.ts | OK |
-| Web UI screens (12 components) | web/components/* | web/components/__tests__/* (RTL+jest-axe) | PEND (clean-run Sprint 3) |
-| Web view-models | web/lib/* | web/lib/__tests__/* | PEND |
-| Mobile app | mobile/src/App.tsx | mobile/lib/__tests__/format.test.ts | PEND |
+| Web UI screens (12 components) | web/components/* | web/components/__tests__/* (RTL+jest-axe), 223/223 100% | OK |
+| Web view-models | web/lib/* | web/lib/__tests__/* 100% | OK |
+| Mobile app | mobile/src/App.tsx | Detox e2e (Desktop); lib unit-tested | PEND (App.tsx via Detox) |
+| Mobile lib (format, apiClient) | mobile/lib/* | mobile/lib/__tests__/* 100% | OK |
 
 ## 3. Adapters — mock/live parameterisation (Sprint 5 + C1)
 
@@ -69,3 +70,6 @@ Updated every mini-sprint. Status: OK verified · PEND partial/pending gate · B
 - I2 core+agent coverage < 100 gate -> build fails despite passing assertions. FIXED Sprint 2 (core 193/193, agent 161/161, 100% all metrics).
 - I3 optional native dep dtrace-provider fails to compile (no VS C++); non-fatal, Detox-only - accept/ignore.
 - I4 backtest2.ts had unreachable dead `[0]` fallback branch. REMOVED Sprint 2.
+- I5 web declared none of its test deps (jsdom/@testing-library/jest-axe/@vitejs-plugin-react) -> whole web suite failed to collect on clean install. FIXED Sprint 3.
+- I6 CustodyPanelAsync had unreachable dead submit guard. REMOVED Sprint 3.
+- I7 web + mobile had no coverage thresholds configured. ADDED 100% gates Sprint 3.

@@ -21,6 +21,9 @@ describe("validateAmount", () => {
   it("withdraw blocked over available", () => {
     expect(validateAmount("withdraw", "150", bal, true).reason).toBe("Insufficient available funds");
   });
+  it("rejects non-finite (Infinity) amount", () => {
+    expect(validateAmount("deposit", "Infinity", bal, false)).toEqual({ valid: false, reason: "Amount must be finite" });
+  });
 });
 
 describe("equity", () => {

@@ -56,4 +56,25 @@ describe("CustodyPanelAsync", () => {
     resolve();
     await waitFor(() => expect(container.querySelector("[aria-busy=true]")).toBeFalsy());
   });
+
+  it("switching to withdraw tab shows withdraw button label", async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<CustodyPanelAsync balance={bal} canWithdraw onSubmit={onSubmit} />);
+    await userEvent.click(screen.getByRole("tab", { name: "Withdraw" }));
+    expect(screen.getByRole("button", { name: "Withdraw" })).toBeInTheDocument();
+    await userEvent.click(screen.getByRole("tab", { name: "Deposit" }));
+    expect(screen.getByRole("button", { name: "Deposit" })).toBeInTheDocument();
+  });
+
+  it("shows validation alert and submit is a no-op for an invalid amount", async () => {
+    const onSubmit = vi.fn().mockResolvedValue(undefined);
+    render(<CustodyPanelAsync balance={bal} canWithdraw onSubmit={onSubmit} />);
+    // withdraw more than available -> invalid -> alert shown, submit guarded
+    await userEvent.click(screen.getByRole("tab", { name: "Withdraw" }));
+    await userEvent.type(screen.getByLabelText("amount"), "9999");
+    expect(screen.getByRole("alert")).toHaveTextContent("Insufficient available funds");
+    // submit button is disabled; force-calling handler path stays a no-op
+    expect(screen.getByRole("button", { name: "Withdraw" })).toBeDisabled();
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
 });

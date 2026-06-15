@@ -44,6 +44,13 @@ describe("CustodyPanel", () => {
     expect(screen.getByRole("alert")).toHaveTextContent("Insufficient");
   });
 
+  it("can switch back to the deposit tab", async () => {
+    render(<CustodyPanel balance={bal} canWithdraw onSubmit={() => {}} />);
+    await userEvent.click(screen.getByRole("tab", { name: "Withdraw" }));
+    await userEvent.click(screen.getByRole("tab", { name: "Deposit" }));
+    expect(screen.getByRole("tab", { name: "Deposit" })).toHaveAttribute("aria-selected", "true");
+  });
+
   it("no a11y violations", async () => {
     const { container } = render(<CustodyPanel balance={bal} canWithdraw onSubmit={() => {}} />);
     expect(await axe(container)).toHaveNoViolations();

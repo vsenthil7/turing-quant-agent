@@ -20,7 +20,8 @@ export function CustodyPanelAsync({ balance, canWithdraw, onSubmit }: CustodyPan
   const busy = submitState === "submitting";
 
   const handleSubmit = async () => {
-    if (!validation.valid) return;
+    // The submit button is disabled whenever validation fails or a request is in
+    // flight, so this handler only runs for a valid, idle form.
     setSubmitState("submitting");
     setErrorMsg("");
     try {
