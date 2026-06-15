@@ -10,7 +10,17 @@ export default defineConfig({
       reporter: ["text", "json-summary"],
       thresholds: { lines: 100, branches: 100, functions: 100, statements: 100 },
       include: ["src/**/*.ts"],
-      exclude: ["src/index.ts", "src/types.ts", "src/main.ts", "src/adapters/**"]
+      exclude: [
+        "src/index.ts", "src/types.ts", "src/main.ts",
+        // Live adapter stubs are TODO[DESKTOP] (real external calls). Their mock
+        // counterparts (mocks.ts) and the selection factory (factory.ts) ARE covered.
+        "src/adapters/index.ts",
+        "src/adapters/viemChain.ts",
+        "src/adapters/mantleOracle.ts",
+        "src/adapters/ipfsProvenance.ts",
+        "src/adapters/sqliteEventStore.ts",
+        "src/adapters/openaiLlm.ts"
+      ]
     }
   }
 });

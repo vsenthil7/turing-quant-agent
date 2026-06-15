@@ -59,11 +59,12 @@ Updated every mini-sprint. Status: OK verified · PEND partial/pending gate · B
 
 | Adapter | File | Mock (default) | Live (env-gated) | Status |
 |---------|------|----------------|------------------|--------|
-| Chain (Mantle) | adapters/viemChain.ts | deterministic stub | viem + Mantle RPC | PLAN TODO[DESKTOP] |
-| Oracle | adapters/mantleOracle.ts | fixed feed | live oracle | PLAN |
-| IPFS provenance | adapters/ipfsProvenance.ts | in-memory CID | live IPFS | PLAN |
-| Event store | adapters/sqliteEventStore.ts | in-memory | better-sqlite3 | PLAN |
-| LLM | adapters/openaiLlm.ts | canned completion | OpenAI API | PLAN |
+| Chain (Mantle) | adapters/viemChain.ts | createMockChain (factory default) | viem + Mantle RPC | MOCK OK (S5); live PLAN C1 |
+| Oracle | adapters/mantleOracle.ts | createMockOracle (real aggregation guard) | live oracle | MOCK OK (S5); live PLAN C1 |
+| IPFS provenance | adapters/ipfsProvenance.ts | createMockProvenance (in-mem CID) | live IPFS | MOCK OK (S5); live PLAN C1 |
+| Event store | adapters/sqliteEventStore.ts | createMockEventStore (in-mem) | better-sqlite3 | MOCK OK (S5); live PLAN C1 |
+| LLM | adapters/openaiLlm.ts | createMockLlm (deterministic JSON) | OpenAI API | MOCK OK (S5); live PLAN C1 |
+| Mode factory | adapters/factory.ts | TQA_MODE/per-adapter env selection | n/a | OK (S5, 100%) |
 
 ## 4. Known issues found this session
 - I1 missing `zod` in agent/package.json -> 3 test files fail to load. FIXED Sprint 1.

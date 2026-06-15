@@ -21,12 +21,12 @@ env flag (`TQA_MODE` / per-adapter `*_MODE`). Switching is a parameter, not a co
 | Workspace | Tests passing | Coverage gate (100%) | Clean-install OK |
 |-----------|---------------|----------------------|------------------|
 | @tqa/core | 193 / 193     | PASS 100% all metrics | OK |
-| @tqa/agent| 161 / 161     | PASS 100% all metrics | OK |
+| @tqa/agent| 182 / 182     | PASS 100% all metrics | OK |
 | @tqa/web  | 223 / 223     | PASS 100% all metrics | OK (test deps fixed S3) |
 | @tqa/mobile| 6 / 6        | PASS 100% (lib scope) | OK (test deps fixed S3) |
 | contracts | not yet run   | - (Foundry)          | - |
 
-**Unit total: 583 tests, all green, 100% coverage across all four workspaces.**
+**Unit total: 604 tests, all green, 100% coverage across all four workspaces.**
 
 ---
 
@@ -108,10 +108,13 @@ env flag (`TQA_MODE` / per-adapter `*_MODE`). Switching is a parameter, not a co
 - [x] commit + push tracker + traceability (a8fb32a)
 - [ ] add README.md (setup, architecture, deploy address placeholder - 20-Project Award req)
 
-### Sprint 5 — Mock/live parameterisation  [ ] TODO  [SANDBOX]
-- [ ] introduce TQA_MODE + per-adapter mode flag; default mock
-- [ ] adapter factory selects mock|live impl; mock path fully tested
-- [ ] tests assert mock default; live path guarded behind env
+### Sprint 5 — Mock/live parameterisation  DONE (2026-06-15)  [SANDBOX]
+- [x] [SANDBOX] mocks.ts: deterministic in-memory impls of Chain, LlmClient, ProvenanceStore, EventStore, oracle
+- [x] [SANDBOX] factory.ts: resolveMode (per-adapter env wins over TQA_MODE, default mock) + make* selectors; live requires config or throws
+- [x] [SANDBOX] adapters/index.ts exports mocks + factory; narrowed coverage exclude to live stubs only (mocks+factory now covered)
+- [x] [SANDBOX] tests: full mock behavior, end-to-end mock run, mode resolution, live-without-config errors -> agent 182/182, 100%
+- [x] [SANDBOX] .env.example: documented TQA_MODE + per-adapter flags + live config keys
+- [x] [SANDBOX] commit + push
 
 ---
 
