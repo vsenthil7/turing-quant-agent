@@ -20,8 +20,8 @@ env flag (`TQA_MODE` / per-adapter `*_MODE`). Switching is a parameter, not a co
 
 | Workspace | Tests passing | Coverage gate (100%) | Clean-install OK |
 |-----------|---------------|----------------------|------------------|
-| @tqa/core | 156 / 156     | FAIL 99.65% st / 94.15% br | OK |
-| @tqa/agent| 129 / 129     | FAIL 98.73% st / 90.87% br | OK (zod fixed S1) |
+| @tqa/core | 193 / 193     | PASS 100% all metrics | OK |
+| @tqa/agent| 161 / 161     | PASS 100% all metrics | OK |
 | @tqa/web  | not yet run   | -                    | - |
 | @tqa/mobile| not yet run  | -                    | - |
 | contracts | not yet run   | - (Foundry)          | - |
@@ -84,10 +84,11 @@ env flag (`TQA_MODE` / per-adapter `*_MODE`). Switching is a parameter, not a co
 - [x] [SANDBOX] reinstall clean; agent suite 108 -> **129/129 pass**
 - [x] commit + push  (coverage gate still open -> folded into Sprint 2)
 
-### Sprint 2 — Coverage to 100% (core + agent)  [~] IN PROGRESS
-- [ ] [SANDBOX] core branch/edge tests: alerts, orders, position, rebalance, strategies-extra, backtest2, auditExport
-- [ ] [SANDBOX] agent branch/edge tests (98.73/90.87 -> 100)
-- [ ] [SANDBOX] both gates green; commit + push
+### Sprint 2 — Coverage to 100% (core + agent)  DONE (2026-06-15)
+- [x] [SANDBOX] core branch/edge tests (coverage-s2.test.ts): alerts, orders, position, rebalance, strategies-extra, auditExport -> core 193/193, 100% all metrics (b04ed5e)
+- [x] [SANDBOX] FOUND+REMOVED dead code: backtest2.ts unreachable `[0]` fallback (guard makes it impossible)
+- [x] [SANDBOX] agent branch/edge tests (coverage-s2.test.ts): api2, notifications, accounts, feeModel, leaderboard, ledger, ratelimit -> agent 161/161, 100% all metrics
+- [x] [SANDBOX] both gates green; commit + push
 
 ### Sprint 3 — Web + mobile clean-run  [ ] TODO
 - [ ] [SANDBOX] run web unit suite under clean install; fix dep/coverage gaps

@@ -16,7 +16,7 @@ Updated every mini-sprint. Status: OK verified · PEND partial/pending gate · B
 | R5 | AI function callable on-chain | agent/src/orchestrate.ts -> DecisionLog | C3/C4 | PLAN |
 | R6 | Runnable demo + >=2min video + public URL | web/; deploy | C7 | PLAN |
 | R7 | Macro-driven strategy (track theme) | agent/src/macro.ts; packages/core/src/regime.ts | agent/test/macro.test.ts; core/test/regime.test.ts | OK |
-| R8 | Verifiable backtest / strategy alpha | packages/core/src/backtest2.ts | core/test/backtest.test.ts, batch-b2 | PEND (coverage gate) |
+| R8 | Verifiable backtest / strategy alpha | packages/core/src/backtest2.ts | core/test/backtest.test.ts, coverage-s2 | OK |
 
 ## 2. Product capabilities
 
@@ -26,19 +26,19 @@ Updated every mini-sprint. Status: OK verified · PEND partial/pending gate · B
 | Signal ensemble (regime-weighted) | core/src/ensemble.ts, signals.ts | ensemble.test, ensemble.edge, signals.test | OK |
 | Regime conditioning | core/src/regime.ts; agent/src/macro.ts | regime.test, macro.test | OK |
 | Position sizing / risk | core/src/sizing.ts, risk.ts | sizing(.edge).test, risk.test | OK |
-| Position lifecycle (B2) | core/src/position.ts | core/test (branch gap 13-14,20-21,28) | PEND |
-| Order validation/triggers (B3) | core/src/orders.ts | core/test (branch gap 19-20) | PEND |
-| Alerting rules (B4) | core/src/alerts.ts | core/test (branch gap 26-30) | PEND |
-| Backtest v2 (B5) | core/src/backtest2.ts | backtest.test, batch-b2 (gap line 56) | PEND |
-| Rebalancing (B6) | core/src/rebalance.ts | core/test (gap line 13) | PEND |
-| Audit export (B7) | core/src/auditExport.ts | core/test (gap line 15) | PEND |
-| Extra strategies (B1) | core/src/strategies-extra.ts | strategy.test (gap 22-27,42) | PEND |
+| Position lifecycle (B2) | core/src/position.ts | position via coverage-s2 (100%) | OK |
+| Order validation/triggers (B3) | core/src/orders.ts | coverage-s2 (100%) | OK |
+| Alerting rules (B4) | core/src/alerts.ts | coverage-s2 (100%) | OK |
+| Backtest v2 (B5) | core/src/backtest2.ts | backtest.test, coverage-s2 (100%) | OK |
+| Rebalancing (B6) | core/src/rebalance.ts | coverage-s2 (100%) | OK |
+| Audit export (B7) | core/src/auditExport.ts | coverage-s2 (100%) | OK |
+| Extra strategies (B1) | core/src/strategies-extra.ts | strategy.test, coverage-s2 (100%) | OK |
 | Guardrails / kill-switch | core/src/guardrails.ts | guardrails.test | OK |
 | Portfolio allocation | core/src/portfolio.ts | portfolio.test | OK |
 | Walk-forward optimize | core/src/optimize.ts | optimize.test | OK |
 | Cost/fee model | core/src/costs.ts | costs.test | OK |
-| Config (zod-validated) | agent/src/config.ts | agent/test/config.test.ts | BLK missing zod (Sprint 1) |
-| Config v2 per-tenant (B8) | agent/src/config2.ts | loadConfig.test, batch-b2 | BLK missing zod (Sprint 1) |
+| Config (zod-validated) | agent/src/config.ts | agent/test/config.test.ts | OK (zod fixed S1) |
+| Config v2 per-tenant (B8) | agent/src/config2.ts | loadConfig.test, batch-b2 | OK (zod fixed S1) |
 | Parse/orchestrate pipeline | agent/src/parse.ts, orchestrate.ts | parse.test, orchestrate.test | OK |
 | AI policy (driver/gate/advisor) | agent/src/policy.ts | policy.test | OK |
 | Event sourcing + snapshot/replay | agent/src/events.ts, replay.ts, persistence.ts | events/replay/persistence.test | OK |
@@ -65,6 +65,7 @@ Updated every mini-sprint. Status: OK verified · PEND partial/pending gate · B
 | LLM | adapters/openaiLlm.ts | canned completion | OpenAI API | PLAN |
 
 ## 4. Known issues found this session
-- I1 missing `zod` in agent/package.json -> 3 test files fail to load (Sprint 1).
-- I2 core coverage 99.65/94.15 < 100 gate -> build fails despite 156/156 pass (Sprint 2).
+- I1 missing `zod` in agent/package.json -> 3 test files fail to load. FIXED Sprint 1.
+- I2 core+agent coverage < 100 gate -> build fails despite passing assertions. FIXED Sprint 2 (core 193/193, agent 161/161, 100% all metrics).
 - I3 optional native dep dtrace-provider fails to compile (no VS C++); non-fatal, Detox-only - accept/ignore.
+- I4 backtest2.ts had unreachable dead `[0]` fallback branch. REMOVED Sprint 2.
