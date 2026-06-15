@@ -14,7 +14,7 @@ Updated every mini-sprint. Status: OK verified · PEND partial/pending gate · B
 | R3 | ERC-8004 agent identity | contracts/src/AgentIdentity.sol | contracts/test/AgentIdentity.t.sol | PEND (compile C2) |
 | R4 | On-chain decision provenance | contracts/src/DecisionLog.sol; agent/src/provenance.ts; adapters/ipfsProvenance.ts | DecisionLog.t.sol; agent/test/provenance.test.ts | PEND |
 | R5 | AI function callable on-chain | agent/src/orchestrate.ts -> DecisionLog | C3/C4 | PLAN |
-| R6 | Runnable demo + >=2min video + public URL | web/; deploy | C7 | PLAN |
+| R6 | Runnable demo + >=2min video + public URL | web/; server/; deploy/ | Sprint 6 server + Sprint 7 Vultr deploy (mock); video C7 | PEND (mock demo S7) |
 | R7 | Macro-driven strategy (track theme) | agent/src/macro.ts; packages/core/src/regime.ts | agent/test/macro.test.ts; core/test/regime.test.ts | OK |
 | R8 | Verifiable backtest / strategy alpha | packages/core/src/backtest2.ts | core/test/backtest.test.ts, coverage-s2 | OK |
 
@@ -66,7 +66,17 @@ Updated every mini-sprint. Status: OK verified · PEND partial/pending gate · B
 | LLM | adapters/openaiLlm.ts | createMockLlm (deterministic JSON) | OpenAI API | MOCK OK (S5); live PLAN C1 |
 | Mode factory | adapters/factory.ts | TQA_MODE/per-adapter env selection | n/a | OK (S5, 100%) |
 
-## 4. Known issues found this session
+## 4. Deployment (Sprint 6 server + Sprint 7 Vultr)
+
+| Item | Detail | Status |
+|------|--------|--------|
+| HTTP server | server/ binds agent api/api2 handlers; mock adapters via makeAdapters | PLAN S6 |
+| Container | single image nginx + node, /srv/turing-quant-agent on atrio-demo | PLAN S7 |
+| Host port | 8097 -> container 80 (free slot after agentfoundry=8096) | DECIDED |
+| Deploy host | Vultr 45.77.52.54 (atrio-demo, Ubuntu 24.04) | n/a |
+| Mode at deploy | MOCK (not Mantle-connected); live = C1-C3 | NOTED |
+
+## 5. Known issues found this session
 - I1 missing `zod` in agent/package.json -> 3 test files fail to load. FIXED Sprint 1.
 - I2 core+agent coverage < 100 gate -> build fails despite passing assertions. FIXED Sprint 2 (core 193/193, agent 161/161, 100% all metrics).
 - I3 optional native dep dtrace-provider fails to compile (no VS C++); non-fatal, Detox-only - accept/ignore.

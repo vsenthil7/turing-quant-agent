@@ -14,6 +14,12 @@ Monorepo: `turing-quant-agent` · packages `@tqa/core`, `@tqa/agent`, `@tqa/web`
 parameterised. Default `mock` (deterministic, no network/keys). `live` selected via
 env flag (`TQA_MODE` / per-adapter `*_MODE`). Switching is a parameter, not a code change.
 
+**Deploy target:** Vultr VPS `atrio-demo` (45.77.52.54, Ubuntu 24.04), single-container
+nginx+node pattern under /srv/<project>, one host port -> container 80, `docker compose up -d`.
+Host ports in use (2026-06-15 ss -tlnp): 1025, 5432/5434/5435, 7880/7881/7882, 8000, 8025,
+8080, 8081, 8093, 8094, 8095, 8096, 8787, 9000/9001. **turing-quant-agent assigned host port 8097**
+(next free in the 809x web band after agentfoundry=8096). DB port if ever needed: 5436.
+
 ---
 
 ## Status snapshot (updated each sprint)
@@ -118,6 +124,25 @@ env flag (`TQA_MODE` / per-adapter `*_MODE`). Switching is a parameter, not a co
 
 ---
 
+## Sprint 6 — Server binding (prerequisite for deploy)  [~] IN PROGRESS  [SANDBOX]
+Production HTTP server so the app is runnable/containerisable. No external keys (mock mode).
+- [ ] [SANDBOX] thin Node HTTP server (server/) binding agent api/api2 handlers -> JSON endpoints (/health,/state,/metrics,/config,/leaderboard,...)
+- [ ] [SANDBOX] server uses makeAdapters() in mock mode by default (TQA_MODE drives live later)
+- [ ] [SANDBOX] Next web build target proven (next build) + served; web apiClient base URL via env
+- [ ] [SANDBOX] server unit tests (handlers wired, routes, 404/500) at 100%
+- [ ] [SANDBOX] commit + push
+
+## Sprint 7 — Containerise + deploy to Vultr (mock-mode demo)  [ ] TODO
+Single-container nginx+node, matching the Convergence pattern on atrio-demo.
+- [ ] [SANDBOX] Dockerfile (multi-stage: node build web + server, nginx serves static + proxies /api)
+- [ ] [SANDBOX] docker-compose.yml (host 8097 -> 80), deploy/nginx.conf, deploy/entrypoint.sh, .dockerignore
+- [ ] [DESKTOP] build image locally if Docker present on Windows; else hand off
+- [ ] [DEPLOY] on Vultr: ssh root@45.77.52.54; git clone -> /srv/turing-quant-agent; docker compose up -d --build; curl health on :8097
+- [ ] NOTE: this is a MOCK-MODE demo (not yet connected to Mantle). Live = Sprints C1-C3.
+- [ ] commit + push deploy artifacts
+
+---
+
 ## FUTURE — Section C (DESKTOP integration -> submission)
 
 ### Sprint C1 — Adapters: fill 5 TODO[DESKTOP] (live path)  [ ] [DESKTOP]
@@ -131,8 +156,8 @@ env flag (`TQA_MODE` / per-adapter `*_MODE`). Switching is a parameter, not a co
 - [ ] deploy via Deploy.s.sol to Mantle testnet (key from local .env only)
 - [ ] verify on Mantle Explorer; record addresses in README + traceability
 
-### Sprint C4 — Server binding + live API  [ ] [DESKTOP]
-- [ ] thin server binds api/api2 handlers; web wired to live API + routes
+### Sprint C4 — Server binding + live API  [~] superseded by Sprint 6 (mock) + C1 (live wiring)  [DESKTOP]
+- [ ] thin server binding done in Sprint 6 (mock); live adapters wired in C1; web -> live API + routes
 
 ### Sprint C5 — E2E live  [ ] [DESKTOP]
 - [ ] Playwright (7x4) + Detox green against running app
