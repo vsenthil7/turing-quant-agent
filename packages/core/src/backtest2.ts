@@ -53,5 +53,7 @@ export function backtest2(p: Backtest2Params): Backtest2Result {
     netReturns.push(barNet);
   }
 
-  return { report: performanceReport(netReturns.length ? netReturns : [0]), trades, netReturns };
+  // netReturns is guaranteed non-empty: the warmup guard above ensures the loop
+  // runs at least once, so no empty-array fallback is needed.
+  return { report: performanceReport(netReturns), trades, netReturns };
 }
