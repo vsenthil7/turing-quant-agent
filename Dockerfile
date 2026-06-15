@@ -42,10 +42,12 @@ COPY --from=builder /app/agent-deploy/dist        /app/agent/dist
 COPY --from=builder /app/agent-deploy/node_modules /app/agent/node_modules
 COPY --from=builder /app/agent-deploy/package.json /app/agent/package.json
 
-# Web: Next standalone server + static assets
-COPY --from=builder /app/web/.next/standalone /app/web
-COPY --from=builder /app/web/.next/static     /app/web/.next/static
-COPY --from=builder /app/web/public           /app/web/public
+# Web: Next standalone server + static assets.
+# In a pnpm workspace, `.next/standalone` preserves the monorepo layout, so the
+# server entrypoint is at standalone/web/server.js and assets nest under web/.next.
+COPY --from=builder /app/web/.next/standalone /app/web-standalone
+COPY --from=builder /app/web/.next/static     /app/web-standalone/web/.next/static
+COPY --from=builder /app/web/public           /app/web-standalone/web/public
 
 # nginx config + entrypoint
 COPY deploy/nginx.conf   /etc/nginx/sites-available/default
