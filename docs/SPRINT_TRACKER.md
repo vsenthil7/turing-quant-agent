@@ -21,7 +21,7 @@ env flag (`TQA_MODE` / per-adapter `*_MODE`). Switching is a parameter, not a co
 | Workspace | Tests passing | Coverage gate (100%) | Clean-install OK |
 |-----------|---------------|----------------------|------------------|
 | @tqa/core | 156 / 156     | FAIL 99.65% st / 94.15% br | OK |
-| @tqa/agent| 108 / 129     | FAIL (3 files fail to load) | FAIL missing `zod` |
+| @tqa/agent| 129 / 129     | FAIL 98.73% st / 90.87% br | OK (zod fixed S1) |
 | @tqa/web  | not yet run   | -                    | - |
 | @tqa/mobile| not yet run  | -                    | - |
 | contracts | not yet run   | - (Foundry)          | - |
@@ -79,13 +79,15 @@ env flag (`TQA_MODE` / per-adapter `*_MODE`). Switching is a parameter, not a co
 - [x] agent suite: 108/129 pass, 3 files fail to load - root cause missing `zod`
 - Outcome: "506 green" was assertions-only; Desktop clean-install + coverage gates expose 2 real gaps.
 
-### Sprint 1 — Fix `zod` dependency (unblock agent)  [~] IN PROGRESS
-- [ ] [SANDBOX] add `zod` to agent/package.json; reinstall
-- [ ] [SANDBOX] agent suite -> 129/129; commit + push
+### Sprint 1 — Fix `zod` dependency (unblock agent)  DONE (2026-06-15)
+- [x] [SANDBOX] add `zod` ^3.25.76 to agent/package.json (was undeclared; pulled transitively before)
+- [x] [SANDBOX] reinstall clean; agent suite 108 -> **129/129 pass**
+- [x] commit + push  (coverage gate still open -> folded into Sprint 2)
 
-### Sprint 2 — Core coverage to 100%  [ ] TODO
-- [ ] [SANDBOX] add branch/edge tests: alerts, orders, position, rebalance, strategies-extra, backtest2, auditExport
-- [ ] [SANDBOX] core gate green; commit + push
+### Sprint 2 — Coverage to 100% (core + agent)  [~] IN PROGRESS
+- [ ] [SANDBOX] core branch/edge tests: alerts, orders, position, rebalance, strategies-extra, backtest2, auditExport
+- [ ] [SANDBOX] agent branch/edge tests (98.73/90.87 -> 100)
+- [ ] [SANDBOX] both gates green; commit + push
 
 ### Sprint 3 — Web + mobile clean-run  [ ] TODO
 - [ ] [SANDBOX] run web unit suite under clean install; fix dep/coverage gaps
@@ -94,8 +96,8 @@ env flag (`TQA_MODE` / per-adapter `*_MODE`). Switching is a parameter, not a co
 ### Sprint 4 — Tracker/traceability/docs in repo  [~] IN PROGRESS
 - [x] create docs/SPRINT_TRACKER.md (this file)
 - [x] create docs/TRACEABILITY.md
+- [x] commit + push tracker + traceability (a8fb32a)
 - [ ] add README.md (setup, architecture, deploy address placeholder - 20-Project Award req)
-- [ ] commit + push
 
 ### Sprint 5 — Mock/live parameterisation  [ ] TODO  [SANDBOX]
 - [ ] introduce TQA_MODE + per-adapter mode flag; default mock
