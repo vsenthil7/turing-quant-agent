@@ -156,8 +156,14 @@ Single-container nginx+node, matching the Convergence pattern on atrio-demo.
 - [ ] viemChain (Mantle RPC), mantleOracle, ipfsProvenance, sqliteEventStore, openaiLlm
 - [ ] each: mock retained + live behind env; integration test per adapter
 
-### Sprint C2 — Contracts compile + Foundry tests  [ ] [DESKTOP]
-- [ ] install Foundry; forge build; forge test green for AgentIdentity/DecisionLog/StrategyVault
+### Sprint C2 — Contracts compile + Foundry tests  [~] IN PROGRESS (Foundry installed on Vultr)  [DESKTOP]
+- [x] Foundry 1.7.1 installed + verified on atrio-demo (forge/cast/anvil/chisel)
+- [x] added contracts/remappings.txt (forge-std/) + gitignored contracts/lib/
+- [ ] [ON BOX] forge install foundry-rs/forge-std --no-git
+- [ ] [ON BOX] forge build (3 contracts, solc 0.8.26)
+- [ ] [ON BOX] forge test -vvv (expect ~26 tests incl. revert/negative cases)
+- [ ] [ON BOX] forge coverage (100% standard)
+- NOTE: forge runs on the Vultr box (not the Windows shell); commands in DEPLOY/this tracker, output reviewed here.
 
 ### Sprint C3 — Deploy to Mantle testnet + verify  [ ] [DESKTOP]
 - [ ] deploy via Deploy.s.sol to Mantle testnet (key from local .env only)
