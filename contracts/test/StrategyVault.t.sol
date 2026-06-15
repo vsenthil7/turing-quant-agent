@@ -88,12 +88,12 @@ contract StrategyVaultTest is Test {
 
     function test_revert_constructor_badBps() public {
         vm.expectRevert("bad bps");
-        new StrategyVault(agent, log, 100, 10001, 1000);
+        new StrategyVault(agent, decisionLog, 100, 10001, 1000);
     }
 
     function test_revert_constructor_zeroEquity() public {
         vm.expectRevert("zero equity");
-        new StrategyVault(agent, log, 100, 2000, 0);
+        new StrategyVault(agent, decisionLog, 100, 2000, 0);
     }
 
     function test_revert_constructor_zeroAgent() public {
