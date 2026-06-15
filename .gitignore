@@ -8,6 +8,7 @@ cache/
 coverage/
 cov.txt
 coverage_out.txt
+*.tsbuildinfo
 broadcast/
 .next/
 *.log

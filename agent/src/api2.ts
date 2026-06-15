@@ -3,8 +3,8 @@
 import { authorize, type Account, type Session } from "./domain/accounts.js";
 import { applyEntry, foldEntries, type LedgerEntry, type Balance } from "./domain/ledger.js";
 import { publicBoard, tenantBoard, type AgentRecord } from "./domain/leaderboard.js";
+import type { ApiResponse } from "./api.js";
 
-export interface ApiResponse<T = unknown> { status: number; body: T; }
 const ok = <T>(body: T): ApiResponse<T> => ({ status: 200, body });
 const bad = (m: string): ApiResponse<{ error: string }> => ({ status: 400, body: { error: m } });
 const forbidden = (m: string): ApiResponse<{ error: string }> => ({ status: 403, body: { error: m } });

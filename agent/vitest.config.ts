@@ -12,6 +12,8 @@ export default defineConfig({
       include: ["src/**/*.ts"],
       exclude: [
         "src/index.ts", "src/types.ts", "src/main.ts",
+        // I/O-only network entrypoint (router logic IS covered in server-router.test.ts)
+        "src/server/httpServer.ts",
         // Live adapter stubs are TODO[DESKTOP] (real external calls). Their mock
         // counterparts (mocks.ts) and the selection factory (factory.ts) ARE covered.
         "src/adapters/index.ts",

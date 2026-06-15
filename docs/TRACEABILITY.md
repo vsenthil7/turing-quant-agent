@@ -70,7 +70,7 @@ Updated every mini-sprint. Status: OK verified · PEND partial/pending gate · B
 
 | Item | Detail | Status |
 |------|--------|--------|
-| HTTP server | server/ binds agent api/api2 handlers; mock adapters via makeAdapters | PLAN S6 |
+| HTTP server | server/router.ts (pure) + httpServer.ts (I/O); binds api/api2; mock via makeAdapters | DONE S6 (192/192, verified live :8099) |
 | Container | single image nginx + node, /srv/turing-quant-agent on atrio-demo | PLAN S7 |
 | Host port | 8097 -> container 80 (free slot after agentfoundry=8096) | DECIDED |
 | Deploy host | Vultr 45.77.52.54 (atrio-demo, Ubuntu 24.04) | n/a |
@@ -84,3 +84,7 @@ Updated every mini-sprint. Status: OK verified · PEND partial/pending gate · B
 - I5 web declared none of its test deps (jsdom/@testing-library/jest-axe/@vitejs-plugin-react) -> whole web suite failed to collect on clean install. FIXED Sprint 3.
 - I6 CustodyPanelAsync had unreachable dead submit guard. REMOVED Sprint 3.
 - I7 web + mobile had no coverage thresholds configured. ADDED 100% gates Sprint 3.
+- I8 @types/node undeclared in agent -> process/Buffer/node:http unresolved on real tsc build. FIXED Sprint 6.
+- I9 @tqa/core had no types/exports + was not a declared workspace dep -> agent couldn't resolve it on real build. FIXED Sprint 6.
+- I10 ApiResponse exported by both api.ts and api2.ts -> duplicate-export build error. FIXED Sprint 6 (api2 imports from api).
+- I11 no proven build path existed; whole monorepo had never been tsc-built (tests ran on source via vitest). FIXED Sprint 6 (core+agent build clean).

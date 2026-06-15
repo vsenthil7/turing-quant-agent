@@ -24,3 +24,4 @@ export * from "./domain/ratelimit.js";
 export * from "./config2.js";
 export * from "./notifications.js";
 export * from "./api2.js";
+export * from "./server/router.js";

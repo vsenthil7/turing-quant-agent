@@ -27,12 +27,12 @@ Host ports in use (2026-06-15 ss -tlnp): 1025, 5432/5434/5435, 7880/7881/7882, 8
 | Workspace | Tests passing | Coverage gate (100%) | Clean-install OK |
 |-----------|---------------|----------------------|------------------|
 | @tqa/core | 193 / 193     | PASS 100% all metrics | OK |
-| @tqa/agent| 182 / 182     | PASS 100% all metrics | OK |
+| @tqa/agent| 192 / 192     | PASS 100% all metrics | OK (builds via tsc) |
 | @tqa/web  | 223 / 223     | PASS 100% all metrics | OK (test deps fixed S3) |
 | @tqa/mobile| 6 / 6        | PASS 100% (lib scope) | OK (test deps fixed S3) |
 | contracts | not yet run   | - (Foundry)          | - |
 
-**Unit total: 604 tests, all green, 100% coverage across all four workspaces.**
+**Unit total: 614 tests, all green, 100% coverage across all four workspaces. core + agent build clean via tsc.**
 
 ---
 
@@ -124,13 +124,18 @@ Host ports in use (2026-06-15 ss -tlnp): 1025, 5432/5434/5435, 7880/7881/7882, 8
 
 ---
 
-## Sprint 6 — Server binding (prerequisite for deploy)  [~] IN PROGRESS  [SANDBOX]
+## Sprint 6 — Server binding (prerequisite for deploy)  DONE (2026-06-15)  [SANDBOX]
 Production HTTP server so the app is runnable/containerisable. No external keys (mock mode).
-- [ ] [SANDBOX] thin Node HTTP server (server/) binding agent api/api2 handlers -> JSON endpoints (/health,/state,/metrics,/config,/leaderboard,...)
-- [ ] [SANDBOX] server uses makeAdapters() in mock mode by default (TQA_MODE drives live later)
-- [ ] [SANDBOX] Next web build target proven (next build) + served; web apiClient base URL via env
-- [ ] [SANDBOX] server unit tests (handlers wired, routes, 404/500) at 100%
-- [ ] [SANDBOX] commit + push
+- [x] [SANDBOX] thin Node http server (src/server/httpServer.ts) + pure router (router.ts) over api/api2 handlers -> /health,/state,/metrics,/config,/replay
+- [x] [SANDBOX] buildContainerFromFactory(): makeAdapters in mock by default; TQA_MODE=live switches (live needs config)
+- [x] [SANDBOX] router tests: every route, method-guards (405), 404, slash-normalisation -> agent 192/192, 100%
+- [x] [SANDBOX] FOUND+FIXED 4 build-time bugs (masked by vitest's ambient env, exposed by real tsc build):
+      (a) @types/node undeclared; (b) @tqa/core had no types/exports + not a declared workspace dep;
+      (c) ApiResponse exported by both api.ts and api2.ts (dup); (d) no proven build path existed at all.
+- [x] [SANDBOX] core+agent now build clean via tsc (core emits dist + .d.ts; agent consumes @tqa/core workspace dist)
+- [x] [VERIFIED LIVE] booted compiled server on :8099 -> /health,/state,/config,/metrics 200, /nope 404 (mock mode)
+- [x] cleaned stray in-src compiled artifacts; added *.tsbuildinfo to .gitignore
+- [ ] commit + push
 
 ## Sprint 7 — Containerise + deploy to Vultr (mock-mode demo)  [ ] TODO
 Single-container nginx+node, matching the Convergence pattern on atrio-demo.
